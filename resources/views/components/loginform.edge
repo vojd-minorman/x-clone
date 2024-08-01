@@ -1,0 +1,22 @@
+<section>
+  <h1>Login</h1>
+  <form action="{{ route('login') }}" method="POST">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+    <div>
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" required>
+    </div>
+    <div>
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" required>
+    </div>
+    <button type="submit">Login</button>
+  </form>
+
+  <p>Pas encore membre ? <a href="{{ route('register') }}">Enregistre toi</a></p>
+
+  @if (session.has('notification'))
+    <p>{{ session.get('notification') }}</p>
+  @endif
+</section>
+

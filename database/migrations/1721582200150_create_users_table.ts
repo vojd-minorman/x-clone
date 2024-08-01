@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { BaseSchema } from '@adonisjs/lucid/schema'
 
 export default class extends BaseSchema {
@@ -18,6 +19,5 @@ export default class extends BaseSchema {
 
   async down() {
     this.schema.dropTable(this.tableName)
- 
  }
 }

@@ -9,7 +9,11 @@
 */
 
 import router from '@adonisjs/core/services/router'
+import { middleware } from '#start/kernel'
 import { HttpContext } from '@adonisjs/core/http'
+
+const AuthController = () => import('#controllers/auth_controller')
+const RegisterController = () => import('#controllers/registers_controller')
 
 const tweets = [
   {
@@ -84,6 +88,7 @@ const tweets = [
 ]
 
 
+
 router.get('/', async (ctx: HttpContext) => {
   return ctx.response.redirect().toRoute('home')
 })
@@ -92,10 +97,15 @@ router.get('/', async (ctx: HttpContext) => {
 
 router.get('/home', async ({ view }) => {
   return view.render('pages/home', { tweets })
-}).as('home')
+}).as('home').use(middleware.auth())
 
-router.get('/login', async ({ view }) => {
-  return view.render('pages/login')
-}).as('login')
+router.get('/login', [AuthController, 'loginForm']).as('login')
+
+router.post('/login', [AuthController, 'login'])
+
+router.get('/register', [RegisterController, 'registerForm']).as('register')
+
+router.post('/register', [RegisterController, 'register'])
+
 
 

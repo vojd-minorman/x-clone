@@ -6,7 +6,7 @@ export default class extends BaseSchema {
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.integer('user_id').unsigned().references('id').inTable('users').onDelete('CASCADE')
+      table.integer('user_id').unsigned().references('users.id').onDelete('CASCADE')
       table.string('text', 280).notNullable()
       table.integer('likes').defaultTo(0)
       table.integer('retweets').defaultTo(0)
