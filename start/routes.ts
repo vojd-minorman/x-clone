@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /*
 |--------------------------------------------------------------------------
 | Routes file
@@ -8,7 +9,7 @@
 */
 
 import router from '@adonisjs/core/services/router'
-import { HttpContext } from "@adonisjs/core/http";
+import { HttpContext } from '@adonisjs/core/http'
 
 const tweets = [
   {
@@ -22,7 +23,7 @@ const tweets = [
     retweets: 144,
     likes: 184,
     shares: 0,
-    verified: true
+    verified: true,
   },
   {
     id: 2,
@@ -36,7 +37,7 @@ const tweets = [
     retweets: 48,
     likes: 484,
     shares: 0,
-    verified: true
+    verified: true,
   },
   {
     id: 3,
@@ -44,13 +45,12 @@ const tweets = [
     date: 'Oct 29',
     username: '@twitter',
     tweetAvatar: 'images/tweeter-avatar.png',
-    text: 'BIG NEWS lol jk still Twitter' ,
-    comments: "6.8K",
-    retweets: "36.6K",
-    likes: "267.1K",
+    text: 'BIG NEWS lol jk still Twitter',
+    comments: '6.8K',
+    retweets: '36.6K',
+    likes: '267.1K',
     shares: 0,
-    verified: true
-
+    verified: true,
   },
   {
     id: 4,
@@ -58,7 +58,7 @@ const tweets = [
     date: 'Oct 04',
     username: '@twitter',
     tweetAvatar: 'images/tweeter-avatar.png',
-    text: 'hello literally everyone' ,
+    text: 'hello literally everyone',
     comments: "116.7K",
     retweets: "785.5K",
     likes: "3.3M",
@@ -81,19 +81,18 @@ const tweets = [
     verified: true
 
   },
-];
+]
 
 
 router.get('/', async (ctx: HttpContext) => {
   return ctx.response.redirect().toRoute('home')
 })
 
+// eslint-disable-next-line prettier/prettier
 
 router.get('/home', async ({ view }) => {
-
   return view.render('pages/home', { tweets })
 }).as('home')
-
 
 router.get('/login', async ({ view }) => {
   return view.render('pages/login')
