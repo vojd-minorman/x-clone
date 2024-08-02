@@ -1,4 +1,10 @@
 <section class="header">
    <p class="page-tab-disabled page-tab" id="explore">Pour vous</p>
    <p class="page-tab-active page-tab" id="following">Abonnements</p>
+   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+  </form>
+
+  <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+
 </section>

@@ -16,7 +16,7 @@ export default class RegistersController {
 
     const data = await request.validateUsing(createRegisterValidator)
     // Créer un nouvel utilisateur
-    const user = await User.create({
+      await User.create({
       fullName: data.fullName,
       email: data.email,
       password: await data.password,

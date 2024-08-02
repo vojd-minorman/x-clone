@@ -103,9 +103,16 @@ router.get('/login', [AuthController, 'loginForm']).as('login')
 
 router.post('/login', [AuthController, 'login'])
 
+router
+  .post('/logout', [AuthController, 'logout']).as('logout').use(middleware.auth())
+
+
 router.get('/register', [RegisterController, 'registerForm']).as('register')
 
 router.post('/register', [RegisterController, 'register'])
+
+
+
 
 
 
