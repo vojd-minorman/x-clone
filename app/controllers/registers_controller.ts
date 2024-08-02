@@ -19,7 +19,7 @@ export default class RegistersController {
       await User.create({
       fullName: data.fullName,
       email: data.email,
-      password: await data.password,
+      password: data.password,
       date_of_birth: data.date_of_birth,
     })
 
