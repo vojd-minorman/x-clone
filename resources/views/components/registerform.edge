@@ -15,18 +15,14 @@
       <input type="password" name="password" id="password" required>
     </div>
     <div>
-      <label for="password_confirmation">Confirm Password</label>
-      <input type="password" name="password_confirmation" id="password_confirmation" required>
-    </div>
-    <div>
       <label for="dateOfBirth">Date of Birth</label>
-      <input type="date" name="dateOfBirth" id="dateOfBirth" required>
+      <input type="date" name="date_of_birth" id="dateOfBirth" required>
     </div>
     <button type="submit">Register</button>
   </form>
 
   <p>Déjà enregistré ? <a href="{{ route('login') }}">Connecte toi</a></p>
-  
+
 
   @if (session.has('notification'))
     <p>{{ session.get('notification') }}</p>

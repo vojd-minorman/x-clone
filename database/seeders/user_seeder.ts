@@ -6,10 +6,9 @@ export default class UserSeeder extends BaseSeeder {
     await User.createMany([
       {
         fullName : 'Neville Mitshiabu',
-        email: 'mitshneville7@gmail.com',
+        email: 'daniel@gmail.com',
         password: '123456789',
-        avatar_url : 'images/nytimes-avatar.png',
-        verified : true,
+        date_of_birth : '10/08/2021',
       },
     ])
   }

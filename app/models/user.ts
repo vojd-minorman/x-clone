@@ -27,10 +27,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare password: string
 
   @column()
-  declare avatar_url: string | null
-
-  @column()
-  declare verified: boolean
+  declare date_of_birth: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

@@ -1,4 +1,9 @@
 import type { HttpContext } from '@adonisjs/core/http'
+import User from '#models/user'
+import {createRegisterValidator} from '#validators/register'
+// import db from '@adonisjs/lucid/services/db'
+
+
 
 export default class RegistersController {
 
@@ -6,11 +11,19 @@ export default class RegistersController {
     return view.render('pages/register')
   }
 
-  async register({ request, response, session }: HttpContext) {
-    // Définir le schéma de validation
-    
+  async register({ request, response }: HttpContext) {
+    // Valider les données du formulaire
+
+    const data = await request.validateUsing(createRegisterValidator)
+    // Créer un nouvel utilisateur
+    const user = await User.create({
+      fullName: data.fullName,
+      email: data.email,
+      password: await data.password,
+      date_of_birth: data.date_of_birth,
+    })
 
     // Rediriger l'utilisateur après l'enregistrement
-    session.flash('notification', 'Registration successful! You can now log in.')
     return response.redirect().toRoute('login')
+}
 }
