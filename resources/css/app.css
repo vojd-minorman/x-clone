@@ -215,4 +215,18 @@ body{
   gap: 20px;
 }
 
+/*
+/***/
 
+/* .page-tab {
+  cursor: pointer;
+}
+
+.page-tab-disabled {
+  color: grey;
+  pointer-events: none;
+}
+
+.hidden {
+  display: none;
+} */

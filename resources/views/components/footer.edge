@@ -1,38 +1,44 @@
 <script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Fonction pour afficher le contenu selon l'onglet sélectionné
   function showTab(tabName) {
-    // Remove 'active' class from all tab contents and tabs
-    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.page-tab').forEach(el => el.classList.remove('active'));
+    // Retirer la classe 'active' de tous les contenus des onglets et des onglets eux-mêmes
+    var tabContents = document.querySelectorAll('.tab-content');
+    for (var i = 0; i < tabContents.length; i++) {
+      tabContents[i].classList.remove('page-tab-active');
+      tabContents[i].classList.add('page-tab-disabled');
+    }
+    var tabs = document.querySelectorAll('.page-tab');
+    for (var j = 0; j < tabs.length; j++) {
+      tabs[j].classList.remove('page-tab-active');
+      tabContents[i].classList.add('page-tab-disabled');
+    }
 
-    // Add 'active' class to the selected tab content and tab
-    document.getElementById(`content-${tabName}`).classList.add('active');
-    document.getElementById(`tab-${tabName}`).classList.add('active');
+    // Ajouter la classe 'active' au contenu et à l'onglet sélectionnés
+    document.getElementById('content-' + tabName).classList.add('active');
+    document.getElementById('tab-' + tabName).classList.add('active');
   }
 
-  // Initialize with the default tab
-  document.addEventListener('DOMContentLoaded', () => {
-    showTab('all'); // Default tab
+  // Initialiser avec l'onglet par défaut
+  showTab('all'); // Onglet par défaut
+
+  // Ajouter les gestionnaires d'événements aux onglets
+  document.getElementById('tab-all').addEventListener('click', function () {
+    showTab('all');
   });
+
+  document.getElementById('tab-following').addEventListener('click', function () {
+    showTab('following');
+  });
+});
+
+
 </script>
 
 <style>
   .tabs {
     display: flex;
     cursor: pointer;
-  }
-
-  .page-tab {
-    padding: 10px;
-    margin-right: 5px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #f5f5f5;
-  }
-
-  .page-tab.active {
-    background-color: #ffffff;
-    border-bottom: 1px solid #ffffff;
-    font-weight: bold;
   }
 
   .tab-content {

@@ -1,10 +1,31 @@
+<script>
+  function showTab(tabIndex) {
+      const tabs = document.querySelectorAll('.page-tab');
+      const tabContents = document.querySelectorAll('.tab-content');
 
-<section class="header tab">
-  <p class="page-tab{{activeTab === 'all' ? '-active' : '-disabled'}}" id="all" onclick="showTab('all')">Pour vous</p>
-  <p class="page-tab{{activeTab === 'following' ? '-active' : '-disabled'}}" id="following" onclick="showTab('following')">Abonnements</p>
+      tabs.forEach((tab, index) => {
+          if (index === tabIndex) {
+              tab.classList.add('page-tab-active');
+              tab.classList.remove('page-tab-disabled');
+          } else {
+              tab.classList.add('page-tab-disabled');
+              tab.classList.remove('page-tab-active');
+          }
+      });
 
-
-  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+      tabContents.forEach((content, index) => {
+          if (index === tabIndex) {
+              content.classList.add('active');
+          } else {
+              content.classList.remove('active');
+          }
+      });
+  }
+</script>
+<section class="header">
+   <p class="page-tab-disabled page-tab" id="tab-all" onclick="showTab(0)">Pour vous</p>
+   <p class="page-tab-active page-tab" id="tab-following" onclick="showTab(1)">Abonnements</p>
+   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
   </form>
 
