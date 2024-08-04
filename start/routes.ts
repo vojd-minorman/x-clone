@@ -14,6 +14,7 @@ import { HttpContext } from '@adonisjs/core/http'
 
 const AuthController = () => import('#controllers/auth_controller')
 const RegisterController = () => import('#controllers/registers_controller')
+const TweetController = () => import('#controllers/tweets_controller')
 
 const tweets = [
   {
@@ -95,9 +96,7 @@ router.get('/', async (ctx: HttpContext) => {
 
 // eslint-disable-next-line prettier/prettier
 
-router.get('/home', async ({ view }) => {
-  return view.render('pages/home', { tweets })
-}).as('home').use(middleware.auth())
+
 
 router.get('/login', [AuthController, 'loginForm']).as('login')
 
@@ -110,6 +109,12 @@ router
 router.get('/register', [RegisterController, 'registerForm']).as('register')
 
 router.post('/register', [RegisterController, 'register'])
+
+router.get('/home', [AuthController, 'showhome']).use(middleware.auth()).use(middleware.fetchTweets()).as('home')
+
+// router.get('/tweet', [TweetController, 'index']).as('index').use(middleware.auth())
+
+
 
 
 

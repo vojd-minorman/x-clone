@@ -18,6 +18,20 @@ export default class AuthController {
     response.redirect('/')
   }
 
+  async showhome({ auth, view }: HttpContext) {
+    const user = auth.user!
+
+    // if (!user) {
+    //   return view.render('pages/login')
+    // }
+
+    // const metrics = await user.getAllMetrics()
+
+    return view.render('pages/home', {
+      user,
+    })
+  }
+
   async logout({ auth, response }: HttpContext) {
     await auth.use('web').logout()
     return response.redirect().toRoute('login')

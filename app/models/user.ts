@@ -27,7 +27,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare password: string
 
   @column()
-  declare date_of_birth: string
+  declare date_of_birth: Date
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -38,8 +38,11 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @hasMany(() => Tweet)
   declare tweets: HasMany<typeof Tweet>
 
-  @hasMany(() => Follow)
-  declare follows: HasMany<typeof Follow>
+  @hasMany(() => Follow,{ foreignKey: 'follower_id' })
+  declare follower: HasMany<typeof Follow>
+
+  @hasMany(() => Follow,{ foreignKey: 'following_id' })
+  declare following: HasMany<typeof Follow>
 
   @hasMany(() => Comment)
   declare comments: HasMany<typeof Comment>

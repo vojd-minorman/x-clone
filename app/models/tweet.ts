@@ -24,6 +24,9 @@ export default class Tweet extends BaseModel {
   @column()
   declare shares: number
 
+  @column()
+  declare tweet_image: string
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
@@ -33,7 +36,10 @@ export default class Tweet extends BaseModel {
   @hasMany(() => Comment)
   declare comments: HasMany<typeof Comment>
 
-  @belongsTo(() => User)
+  @belongsTo(() => User, {
+    foreignKey: 'user_id', // Key on the tweets table that links to the users
+    localKey: 'id', // Key on the users table that links to the tweets
+  })
   declare users: BelongsTo<typeof User>
 
 }

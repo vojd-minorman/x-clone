@@ -1,4 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
+
 import User from '#models/user'
 import {createRegisterValidator} from '#validators/register'
 // import db from '@adonisjs/lucid/services/db'

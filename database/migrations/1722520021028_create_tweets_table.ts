@@ -11,6 +11,7 @@ export default class extends BaseSchema {
       table.integer('likes').defaultTo(0)
       table.integer('retweets').defaultTo(0)
       table.integer('shares').defaultTo(0)
+      table.string('tweet_image').nullable
       table.timestamp('created_at')
       table.timestamp('updated_at')
     })

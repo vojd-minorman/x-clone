@@ -1,7 +1,10 @@
-<section class="header">
-   <p class="page-tab-disabled page-tab" id="explore">Pour vous</p>
-   <p class="page-tab-active page-tab" id="following">Abonnements</p>
-   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+
+<section class="header tab">
+  <p class="page-tab{{activeTab === 'all' ? '-active' : '-disabled'}}" id="all" onclick="showTab('all')">Pour vous</p>
+  <p class="page-tab{{activeTab === 'following' ? '-active' : '-disabled'}}" id="following" onclick="showTab('following')">Abonnements</p>
+
+
+  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
   </form>
 

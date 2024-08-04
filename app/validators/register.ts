@@ -12,6 +12,6 @@ export const createRegisterValidator = vine.compile(
       return !user
     }),
     password: vine.string().trim(),
-    date_of_birth: vine.string().trim(),
+    date_of_birth: vine.date(),
   })
 )
