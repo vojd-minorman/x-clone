@@ -25,6 +25,7 @@ const enrichedTweets = tweets.map(tweet => {
   return {
     ...tweet.toJSON(),
     userFullName: tweet.users?.fullName || 'Unknown User',
+    user_id: tweet.users?.id || 'Null',
   }
 })
     // Enrichir les tweets avec le nom complet de l'utilisateur
@@ -32,6 +33,7 @@ const enrichedTweets = tweets.map(tweet => {
         return {
           ...tweet.toJSON(),
           userFullName: tweet.users?.fullName || 'Unknown User',
+          user_id: tweet.users?.id || 'Null',
         }
       })
 

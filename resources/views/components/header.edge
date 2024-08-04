@@ -23,11 +23,14 @@
   }
 </script>
 <section class="header">
-   <p class="page-tab-disabled page-tab" id="tab-all" onclick="showTab(0)">Pour vous</p>
-   <p class="page-tab-active page-tab" id="tab-following" onclick="showTab(1)">Abonnements</p>
+   <p class="page-tab-active page-tab" id="tab-all" onclick="showTab(0)">Pour vous</p>
+   <p class=" page-tab-disabled page-tab" id="tab-following" onclick="showTab(1)">Abonnements</p>
    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
   </form>
+  <!-- Ajoute un lien vers le profil de l'utilisateur connecté dans le header ou le menu -->
+
+
 
   <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
 

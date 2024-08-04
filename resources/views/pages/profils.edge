@@ -1,0 +1,15 @@
+@layouts.app('title', 'Home')
+ <div class="timeline">
+   @component('components/header')
+   @endcomponent
+   @component('components/tweetEditor')
+   @endcomponent
+
+   {{--  @each(user in userData)  --}}
+
+   @component('components/informations', {userData})
+   @endcomponent
+ {{--  @end  --}}
+
+ </div>
+ @end

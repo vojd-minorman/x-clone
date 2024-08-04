@@ -3,20 +3,20 @@ document.addEventListener('DOMContentLoaded', function () {
   // Fonction pour afficher le contenu selon l'onglet sélectionné
   function showTab(tabName) {
     // Retirer la classe 'active' de tous les contenus des onglets et des onglets eux-mêmes
-    var tabContents = document.querySelectorAll('.tab-content');
-    for (var i = 0; i < tabContents.length; i++) {
-      tabContents[i].classList.remove('page-tab-active');
-      tabContents[i].classList.add('page-tab-disabled');
-    }
-    var tabs = document.querySelectorAll('.page-tab');
-    for (var j = 0; j < tabs.length; j++) {
-      tabs[j].classList.remove('page-tab-active');
-      tabContents[i].classList.add('page-tab-disabled');
-    }
+    // var tabContents = document.querySelectorAll('.tab-content');
+    // for (var i = 0; i < tabContents.length; i++) {
+    //   tabContents[i].classList.remove('page-tab-active');
+    //   tabContents[i].classList.add('page-tab-disabled');
+    // }
+    // var tabs = document.querySelectorAll('.page-tab');
+    // for (var j = 0; j < tabs.length; j++) {
+    //   tabs[j].classList.remove('page-tab-active');
+    //   tabContents[i].classList.add('page-tab-disabled');
+    // }
 
     // Ajouter la classe 'active' au contenu et à l'onglet sélectionnés
-    document.getElementById('content-' + tabName).classList.add('active');
-    document.getElementById('tab-' + tabName).classList.add('active');
+    // document.getElementById('content-' + tabName).classList.add('page-tab-active');
+    document.getElementById('tab-' + tabName).classList.add('page-tab-active');
   }
 
   // Initialiser avec l'onglet par défaut
@@ -36,16 +36,5 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <style>
-  .tabs {
-    display: flex;
-    cursor: pointer;
-  }
 
-  .tab-content {
-    display: none;
-  }
-
-  .tab-content.active {
-    display: block;
-  }
 </style>

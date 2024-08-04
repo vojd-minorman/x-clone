@@ -217,16 +217,15 @@ body{
 
 /*
 /***/
-
-/* .page-tab {
+.tabs {
+  display: flex;
   cursor: pointer;
 }
 
-.page-tab-disabled {
-  color: grey;
-  pointer-events: none;
+.tab-content {
+  display: none;
 }
 
-.hidden {
-  display: none;
-} */
+.tab-content.active {
+  display: block;
+}
