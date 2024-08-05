@@ -1,37 +1,5 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  // Fonction pour afficher le contenu selon l'onglet sélectionné
-  function showTab(tabName) {
-    // Retirer la classe 'active' de tous les contenus des onglets et des onglets eux-mêmes
-    // var tabContents = document.querySelectorAll('.tab-content');
-    // for (var i = 0; i < tabContents.length; i++) {
-    //   tabContents[i].classList.remove('page-tab-active');
-    //   tabContents[i].classList.add('page-tab-disabled');
-    // }
-    // var tabs = document.querySelectorAll('.page-tab');
-    // for (var j = 0; j < tabs.length; j++) {
-    //   tabs[j].classList.remove('page-tab-active');
-    //   tabContents[i].classList.add('page-tab-disabled');
-    // }
-
-    // Ajouter la classe 'active' au contenu et à l'onglet sélectionnés
-    // document.getElementById('content-' + tabName).classList.add('page-tab-active');
-    document.getElementById('tab-' + tabName).classList.add('page-tab-active');
-  }
-
-  // Initialiser avec l'onglet par défaut
-  showTab('all'); // Onglet par défaut
-
-  // Ajouter les gestionnaires d'événements aux onglets
-  document.getElementById('tab-all').addEventListener('click', function () {
-    showTab('all');
-  });
-
-  document.getElementById('tab-following').addEventListener('click', function () {
-    showTab('following');
-  });
-
-
 
   const followButton = document.getElementById('follow-button');
 
