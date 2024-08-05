@@ -7,9 +7,11 @@
 
    {{--  @each(user in userData)  --}}
 
-   @component('components/informations', {userData})
+   @component('components/informations', {userData, isFollowing})
    @endcomponent
  {{--  @end  --}}
+ @component('components/footer')
+   @endcomponent
 
  </div>
  @end

@@ -1,8 +1,13 @@
 <div style="color : white">
 
 
-<h1>Welcome, {{ userData.fullName }}</h1>
+<h1>{{ userData.fullName }}</h1>
   <p>Email: {{ userData.email }}</p>
-  <p>BirthDay: {{ userData.date_of_birth}}</p>
-  <p>Joined: {{ userData.createdAt }}</p>
+  <p>Joined: {{ userData.createdAt.toFormat('DDDD') }}</p>
+
+  @if (isFollowing)
+  <button id="follow-button" data-action="unfollow" data-id="{{ userData.id }}">Abonné</button>
+@else
+  <button id="follow-button" data-action="follow" data-id="{{ userData.id }}">S'abonner</button>
+@endif
 </div>

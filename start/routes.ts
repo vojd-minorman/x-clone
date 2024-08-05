@@ -15,6 +15,7 @@ import { HttpContext } from '@adonisjs/core/http'
 const AuthController = () => import('#controllers/auth_controller')
 const RegisterController = () => import('#controllers/registers_controller')
 const ShowProfilsController = () => import('#controllers/show_profils_controller')
+const FollowsController = () => import('#controllers/follows_controller')
 
 const tweets = [
   {
@@ -115,6 +116,12 @@ router.get('/home', [AuthController, 'showhome']).use(middleware.auth()).use(mid
 router.get('/profile/:user_id', [ShowProfilsController, 'show']).as('profile.show').use(middleware.auth())
 
 router.get('/profile/:id', [ShowProfilsController, 'myprofil']).as('profile.self').use(middleware.auth())
+
+
+
+router.post('/follow/:id', [FollowsController, 'follow']).as('follow')
+router.post('/unfollow/:id', [FollowsController, 'unfollow']).as('unfollow')
+
 
 // router.get('/tweet', [TweetController, 'index']).as('index').use(middleware.auth())
 
