@@ -1,22 +1,41 @@
-<section>
-  <h1>Login</h1>
-  <form action="{{ route('login') }}" method="POST">
-    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-    <div>
-      <label for="email">Email</label>
-      <input type="email" name="email" id="email" required>
-    </div>
-    <div>
-      <label for="password">Password</label>
-      <input type="password" name="password" id="password" required>
-    </div>
-    <button type="submit">Login</button>
-  </form>
+<section class="loginInfo">
+  <div class="container mx-auto">
+    <div class="flex flex-col md:flex-row">
+      <div class="login__logo flex-1 p-4">
 
-  <p>Pas encore membre ? <a href="{{ route('register') }}">Enregistre toi</a></p>
+        <img src="images/logo.jpeg" alt="Tweet"/>
+      </div>
 
-  @if (session.has('notification'))
-    <p>{{ session.get('notification') }}</p>
-  @endif
+      <div class="login__form flex-1 p-4">
+        <div class="title">
+          <h1>Ca se passe <br> maintenant</h1>
+          <p>Inscrivez-vous</p>
+        </div>
+
+        <div>
+          <button class="button">S'inscrire</button>
+        </div>
+
+        <form action="{{ route('login') }}" method="POST">
+          <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+          <div>
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required>
+          </div>
+          <div>
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required>
+          </div>
+          <button type="submit">Login</button>
+        </form>
+
+        <p>Pas encore membre ? <a href="{{ route('register') }}">Enregistre toi</a></p>
+
+        @if (session.has('notification'))
+          <p>{{ session.get('notification') }}</p>
+        @endif
+      </div>
+    </div>
+  </div>
 </section>
 

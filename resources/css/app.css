@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
+/*** TAILWIND CSS ***/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 *{
   box-sizing: border-box;
   margin: 0;
@@ -9,8 +16,9 @@
 body{
   background-color: black;
   color: white;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   max-width: 1800px;
+  height: 100%;
 }
 
 #root{
@@ -228,4 +236,37 @@ body{
 
 .tab-content.active {
   display: block;
+}
+
+/* .loginPage{ */
+  /* padding-top: 25%; */
+  /* margin: auto; */
+  /* height: ; */
+/* } */
+.loginInfo {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+
+}
+
+  /* margin: 400px; */
+  /* min-width: 700px; 
+}
+*/
+.login__logo{
+  text-align: center;
+}
+.login__form .title {
+  margin-bottom: 20px;
+} 
+.login__form .title h1{
+  font-size: 4.5rem;
+  line-height: normal !important;
+  margin-bottom: 20px;
+}
+
+.login__form .title p{
+  font-size: 2.3rem;
 }
