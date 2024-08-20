@@ -98,26 +98,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-/////////////////////////////////////////
-//Formulaire pour publier un nouveau tweet
-/////////////////////////////////////////
+///////////////////////////////////////////
+/**************Nouveau Tweet**************/
+///////////////////////////////////////////
 
 const tweetForm = document.querySelector(".tweet-editor-form");
+const imagePreview = document.getElementById("imagePreview");
 
+/*** Cloudinary Informations ****/
 const cloudName = "dlo6ktcil";
 const presetName = "ml_default";
 
-// const cloudName = "dzcuoxidd";
-// const presetName = "mxvteo84";
-
-// https://api.cloudinary.com/v1_1/<CLOUD_NAME>/image/upload
-
+// Fonction pour uploader l'image à Cloudinary
 async function uploadImage(image) {
   try {
     const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
     const formData = new FormData();
     formData.append("file", image);
     formData.append("upload_preset", presetName);
+
     const response = await fetch(url, {
       method: "POST",
       body: formData,
@@ -125,61 +124,86 @@ async function uploadImage(image) {
 
     const data = await response.json();
 
+    // Afficher l'image téléchargée
+    imagePreview.src = data.secure_url;
+    imagePreview.style.display = "block";
+    console.log('La photo a été envoyé avec succès')
     return data.secure_url;
   } catch (error) {
-    console.log("Le chargement de l'image a echoue");
+    console.log("Le chargement de l'image a échoué");
+    return null;
   }
 }
 
-async function addTweet(tweet){
+async function addTweet(tweet) {
   try {
     const response = await fetch("/tweet", {
       method: "POST",
-      body:JSON.stringify(tweet),
+      body: JSON.stringify(tweet),
       headers: {
-        "Content-Type": "application/json"
-      }
-    })
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+        "Content-Type": "application/json",
+      },
+    });
 
-    if (response.success) {
-      window.location.href = "/login"
+    const data = await response.json();
+
+    if (response.ok) {
+      window.location.href = "/login"; // Redirection après l'envoi
+    } else {
+      console.log("Erreur lors de l'envoi du tweet:", data.error);
     }
-
-    console.log(response);
   } catch (error) {
-
+    console.log("Erreur lors de l'envoi du tweet", error.message);
   }
 }
 
-//Action pour le bouton d'ajout image
 
-// document.getElementById('uploadButton').addEventListener('click', function() {
-//   event.preventDefault
-//   document.getElementById('fileInput').click();
-// });
-
-document.getElementById('fileInput').addEventListener('change', function() {
-  const fileName = this.files[0].name;
-  document.getElementById('uploadButton').textContent = fileName;
+// Gestion du changement d'image
+document.getElementById('fileInput').addEventListener('change', function(event) {
+  const file = event.target.files[0];
+  if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+          const imagePreview = document.getElementById('imagePreview');
+          imagePreview.src = e.target.result;
+          imagePreview.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+  }
 });
 
+// Activation de l'input file quand on clique sur l'image preview
+document.getElementById('imagePreview').addEventListener('click', function() {
+  document.getElementById('fileInput').click();
+});
 
-
+// Gestion de l'envoi du formulaire
 tweetForm.addEventListener("submit", async function (event) {
   event.preventDefault();
 
   const btnSubmit = event.target.querySelector("#btn-submit");
-  // btnSubmit.disabled = true;
+  btnSubmit.disabled = true;
 
   const formData = new FormData(event.target);
-  const urlToImage = await uploadImage(formData.get("tweet_image"));
+  const tweetImage = formData.get("tweet_image");
+
+  let urlToImage = null;
+  if (tweetImage && tweetImage.size > 0) {
+    urlToImage = await uploadImage(tweetImage);
+  }
+
+  if (urlToImage) {
+    formData.set("tweet_image", urlToImage); // Remplace le champ image par l'URL retournée par Cloudinary
+  } else {
+    formData.delete("tweet_image"); // Supprime le champ image si aucune image n'a été uploadée
+  }
 
   const data = Object.fromEntries(formData.entries());
-  data.urlToImage = urlToImage;
-  delete data.img;
-  addTweet(tweet);
-  // btnSubmit.disabled = false;
-  event.target.reset();
-  console.log(urlToImage);
 
+  await addTweet(data);
+
+  btnSubmit.disabled = false;
+  event.target.reset();
 });
+

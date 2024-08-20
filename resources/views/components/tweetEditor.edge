@@ -9,7 +9,11 @@
         <div>
             <textarea class="tweet-editor-input" draggable="false" name="text" id='tweet' placeholder="What's happening?"></textarea>
             <input type="file" name="tweet_image" id="fileInput" style="display : none;">
+            {{ csrfField() }}
         </div>
+        <div>
+          <img id="imagePreview" src="" alt="Image Preview" style="display:none; max-width: 100%; height: auto;">
+      </div>
         <div class="tweet-editor-buttons">
             <div class="tweet-editor-actions">
                     <label for="fileInput" id="uploadButton">
