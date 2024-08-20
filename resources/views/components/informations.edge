@@ -6,9 +6,42 @@
   <p>Email: {{ userData.email }}</p>
   <p>Joined: {{ userData.createdAt.toFormat('DDDD') }}</p>
 
-  @if (isFollowing)
-  <button id="follow-button" data-action="unfollow" data-id="{{ userData.id }}">Abonné</button>
+  {{--  @if (isFollowing)
+  <form action="" method="POST" id="unfollow-form">
+    <input type="hidden" name="follower_id" value="{{ auth.user.id }}">
+    <input type="hidden" name="following_id" value="{{ userData.id }}">
+    <button type="submit" id="unfollow-button">Abonné</button>
+  </form>
 @else
-  <button id="follow-button" data-action="follow" data-id="{{ userData.id }}">S'abonner</button>
-@endif
+  <form action="" method="POST" id="follow-form">
+    <input type="hidden" name="follower_id" value="{{ auth.user.id }}">
+    <input type="hidden" name="following_id" value="{{ userData.id }}">
+    <button type="submit" id="follow-button">S'abonner</button>
+  </form>
+@endif  --}}
+
+
+<form id="follow-unfollow-form" method="POST" >
+  <input type="hidden" name="follower_id" value="{{ auth.user.id }}">
+  <input type="hidden" name="following_id" value="{{ userData.id }}">
+  <input type="hidden" name="action" id="form-action" value="{{ isFollowing ? 'unfollow' : 'follow' }}">
+  <button type="submit" id="follow-unfollow-button">
+    {{ isFollowing ? 'Abonné' : 'S\'abonner' }}
+  </button>
+</form>
+
+
+<style>
+  /* #follow-form, #unfollow-form {
+    display: none;
+  } */
+</style>
+
+
+
+
+
+
+
+
 </div>

@@ -6,11 +6,12 @@
   <title> Accueil / x </title>
   <meta name="csrf-token" content="{{ csrfToken }}">
 
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  @vite('resources/css/app.css')
 </head>
 <body>
   <main id="root">
   {{{ await $slots.main() }}}
   </main>
 </body>
+@vite('resources/js/app.js')
 </html>

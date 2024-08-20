@@ -31,7 +31,7 @@ export default class ShowProfilsController {
 
   }
 
-  async myprofil({ auth, view }: HttpContext) {
+  async profil({ auth, view }: HttpContext) {
     const user = auth.user!
     return view.render('pages/profil', { user })
   }

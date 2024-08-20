@@ -44,12 +44,12 @@ router.get('/home', [AuthController, 'showhome']).use(middleware.auth()).use(mid
 
 router.get('/profile/:user_id', [ShowProfilsController, 'show']).as('profile.show').use(middleware.auth())
 
-router.get('/profile/:id', [ShowProfilsController, 'myprofil']).as('profile.self').use(middleware.auth())
+router.get('/me/:id', [ShowProfilsController, 'profil']).as('me.profil').use(middleware.auth())
 
 
 
-router.post('/follow/:id', [FollowsController, 'follow']).as('follow')
-router.post('/unfollow/:id', [FollowsController, 'unfollow']).as('unfollow')
+router.post('/follow', [FollowsController, 'followOrUnfollow']).as('follow').use(middleware.auth())
+router.post('/unfollow', [FollowsController, 'followOrUnfollow']).as('unfollow').use(middleware.auth())
 
 
 // router.get('/tweet', [TweetController, 'index']).as('index').use(middleware.auth())

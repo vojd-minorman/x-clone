@@ -7,7 +7,7 @@ export const createRegisterValidator = vine.compile(
     email: vine.string().unique(async (db, value) => {
       const user = await db
         .from('users')
-        .where('email', value)
+        .where('email', value) 
         .first()
       return !user
     }),

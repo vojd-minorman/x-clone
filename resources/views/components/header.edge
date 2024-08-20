@@ -1,37 +1,10 @@
-<script>
-  function showTab(tabIndex) {
-      const tabs = document.querySelectorAll('.page-tab');
-      const tabContents = document.querySelectorAll('.tab-content');
-
-      tabs.forEach((tab, index) => {
-          if (index === tabIndex) {
-              tab.classList.add('page-tab-active');
-              tab.classList.remove('page-tab-disabled');
-          } else {
-              tab.classList.add('page-tab-disabled');
-              tab.classList.remove('page-tab-active');
-          }
-      });
-
-      tabContents.forEach((content, index) => {
-          if (index === tabIndex) {
-              content.classList.add('active');
-          } else {
-              content.classList.remove('active');
-          }
-      });
-  }
-</script>
 <section class="header">
-   <p class="page-tab-active page-tab" id="tab-all" onclick="showTab(0)">Pour vous</p>
-   <p class=" page-tab-disabled page-tab" id="tab-following" onclick="showTab(1)">Abonnements</p>
+  <p class="page-tab-active page-tab" id="tab-all">Pour vous</p>
+  <p class="page-tab" id="tab-following">Abonnements</p>
+
    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
   </form>
   <!-- Ajoute un lien vers le profil de l'utilisateur connecté dans le header ou le menu -->
-
-
-
-  <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
-
+  <a href="#" id="logout-link">Logout</a>
 </section>

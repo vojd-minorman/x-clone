@@ -1,6 +1,6 @@
 @layouts.app('title', 'Home')
  <div class="timeline">
-  <a href={{ route('profile.self', { id: auth.user ? auth.user.id : '' }) }}>Mon Profil</a>
+  <a href={{ route('me.profil', { id: auth.user ? auth.user.fullName : '' }) }}>Mon Profil</a>
    @component('components/header')
    @endcomponent
    @component('components/tweetEditor')
@@ -12,7 +12,6 @@
 
 <!-- Content for all tweets -->
 <div id="content-all" class="tab-content active">
-
   @each(tweet in enrichedTweets)
     @component('components/tweet', {tweet})
     @endcomponent
