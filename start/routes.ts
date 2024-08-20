@@ -16,7 +16,7 @@ const AuthController = () => import('#controllers/auth_controller')
 const RegisterController = () => import('#controllers/registers_controller')
 const ShowProfilsController = () => import('#controllers/show_profils_controller')
 const FollowsController = () => import('#controllers/follows_controller')
-
+const TweetController = () => import('#controllers/tweets_controller')
 
 
 
@@ -52,7 +52,7 @@ router.post('/follow', [FollowsController, 'followOrUnfollow']).as('follow').use
 router.post('/unfollow', [FollowsController, 'followOrUnfollow']).as('unfollow').use(middleware.auth())
 
 
-// router.get('/tweet', [TweetController, 'index']).as('index').use(middleware.auth())
+router.post('/tweet', [TweetController, 'addTweet']).as('addTweet').use(middleware.auth())
 
 
 

@@ -1,5 +1,7 @@
 //Deconnexion
 
+// const { Console } = require("console");
+
 document.addEventListener('DOMContentLoaded', function () {
   const logoutLink = document.getElementById('logout-link');
   const logoutForm = document.getElementById('logout-form');
@@ -49,90 +51,135 @@ function showTab(tabIndex) {
   });
 }
 
-// // Abonnement
+/////////////////////////////////////
+/// Gestion d'abonnement
+///////////////////////////////////
 
-// document.addEventListener('DOMContentLoaded', () => {
-//   const followForm = document.getElementById('follow-form');
-//   const unfollowForm = document.getElementById('unfollow-form');
-
-//   async function handleFormSubmit(event, formId, url) {
-//     event.preventDefault();
-
-//     const form = document.getElementById(formId);
-//     const response = await fetch(url, {
-//       method: 'POST',
-//       body: new FormData(form),
-//       headers: {
-//         'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-//       }
-//     });
-
-//     const result = await response.json();
-
-//     if (result.success) {
-//       // Update DOM based on the result
-//       if (formId === 'follow-form') {
-//         // Hide follow form and show unfollow form
-//         document.getElementById('follow-form').style.display = 'none';
-//         document.getElementById('unfollow-form').style.display = 'block';
-//         document.getElementById('unfollow-button').innerText = 'Abonné';
-//       } else {
-//         // Hide unfollow form and show follow form
-//         document.getElementById('unfollow-form').style.display = 'none';
-//         document.getElementById('follow-form').style.display = 'block';
-//         document.getElementById('follow-button').innerText = 'S\'abonner';
-//       }
-//     } else {
-//       console.error('Error:', result.message);
-//     }
-//   }
-
-//   if (followForm) {
-//     followForm.addEventListener('submit', (e) => handleFormSubmit(e, 'follow-form', '/follow'));
-//   }
-
-//   if (unfollowForm) {
-//     unfollowForm.addEventListener('submit', (e) => handleFormSubmit(e, 'unfollow-form', '/unfollow'));
-//   }
-// });
 
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('follow-unfollow-form');
   const button = document.getElementById('follow-unfollow-button');
   const formAction = document.getElementById('form-action');
 
-  form.addEventListener('submit', async function (event) {
-    event.preventDefault();
 
-    const action = formAction.value; // 'follow' ou 'unfollow'
-    const url = formAction.value === 'follow' ? '/follow' : '/unfollow';
+    async function followRel(event) {
+      event.preventDefault();
+      const action = formAction.value; // 'follow' ou 'unfollow'
+      const url = formAction.value === 'follow' ? '/follow' : '/unfollow';
 
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: {
-          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-          'Accept': 'application/json'
-        }
-      });
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: {
+            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Accept': 'application/json'
+          }
+        });
 
-      const result = await response.json();
+        const result = await response.json();
 
-      if (result.success) {
-        if (action === 'follow') {
-          button.innerText = 'Abonné';
-          formAction.value = 'unfollow'; // Changer l'action du formulaire pour 'unfollow'
+        if (result.success) {
+          if (action === 'follow') {
+            button.innerText = 'Abonné';
+            formAction.value = 'unfollow'; // Changer l'action du formulaire pour 'unfollow'
+          } else {
+            button.innerText = 'S\'abonner';
+            formAction.value = 'follow'; // Changer l'action du formulaire pour 'follow'
+          }
         } else {
-          button.innerText = 'S\'abonner';
-          formAction.value = 'follow'; // Changer l'action du formulaire pour 'follow'
+          console.error('Error:', result.message);
         }
-      } else {
-        console.error('Error:', result.message);
+      } catch (error) {
+        console.error('Error:', error);
       }
-    } catch (error) {
-      console.error('Error:', error);
     }
-  });
+  form.addEventListener('submit', followRel);
+
 });
 
+/////////////////////////////////////////
+//Formulaire pour publier un nouveau tweet
+/////////////////////////////////////////
+
+const tweetForm = document.querySelector(".tweet-editor-form");
+
+const cloudName = "dlo6ktcil";
+const presetName = "ml_default";
+
+// const cloudName = "dzcuoxidd";
+// const presetName = "mxvteo84";
+
+// https://api.cloudinary.com/v1_1/<CLOUD_NAME>/image/upload
+
+async function uploadImage(image) {
+  try {
+    const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+    const formData = new FormData();
+    formData.append("file", image);
+    formData.append("upload_preset", presetName);
+    const response = await fetch(url, {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    return data.secure_url;
+  } catch (error) {
+    console.log("Le chargement de l'image a echoue");
+  }
+}
+
+async function addTweet(tweet){
+  try {
+    const response = await fetch("/tweet", {
+      method: "POST",
+      body:JSON.stringify(tweet),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+
+    if (response.success) {
+      window.location.href = "/login"
+    }
+
+    console.log(response);
+  } catch (error) {
+
+  }
+}
+
+//Action pour le bouton d'ajout image
+
+// document.getElementById('uploadButton').addEventListener('click', function() {
+//   event.preventDefault
+//   document.getElementById('fileInput').click();
+// });
+
+document.getElementById('fileInput').addEventListener('change', function() {
+  const fileName = this.files[0].name;
+  document.getElementById('uploadButton').textContent = fileName;
+});
+
+
+
+tweetForm.addEventListener("submit", async function (event) {
+  event.preventDefault();
+
+  const btnSubmit = event.target.querySelector("#btn-submit");
+  // btnSubmit.disabled = true;
+
+  const formData = new FormData(event.target);
+  const urlToImage = await uploadImage(formData.get("tweet_image"));
+
+  const data = Object.fromEntries(formData.entries());
+  data.urlToImage = urlToImage;
+  delete data.img;
+  addTweet(tweet);
+  // btnSubmit.disabled = false;
+  event.target.reset();
+  console.log(urlToImage);
+
+});
