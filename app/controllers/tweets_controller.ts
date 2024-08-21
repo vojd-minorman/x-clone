@@ -10,24 +10,24 @@ export default class TweetsController {
     const data = await request.validateUsing(createAddTweetValidator)
     const userId = auth.user?.id
     // Créer un nouvau Tweet
-
+    if (!userId) {
+      return response.unauthorized('Pas connecté')
+    }
     try {
       // Créer un tweet
 
       const tweet = await Tweet.create({
       user_id: userId,
       text: data.text,
-      tweet_image: data.text_image,
+      tweet_image: data.tweet_image,
       likes : 0,
       retweets : 0,
       shares : 0,
     })
 
 
-    return response.status(201).json({
-      message: 'Tweet créé avec succès',
-      tweet
-    })
+    return response.json({ success: true, tweet })
+
   } catch (error) {
     console.error('Erreur lors de la création du tweet', error)
     return response.status(500).json({

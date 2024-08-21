@@ -40,7 +40,9 @@ router.get('/register', [RegisterController, 'registerForm']).as('register')
 
 router.post('/register', [RegisterController, 'register'])
 
-router.get('/home', [AuthController, 'showhome']).use(middleware.auth()).use(middleware.fetchTweets()).as('home')
+router.get('/home', [AuthController, 'showhome']).use(middleware.fetchTweets()).use(middleware.auth()).as('home')
+
+
 
 router.get('/profile/:user_id', [ShowProfilsController, 'show']).as('profile.show').use(middleware.auth())
 
@@ -53,11 +55,4 @@ router.post('/unfollow', [FollowsController, 'followOrUnfollow']).as('unfollow')
 
 
 router.post('/tweet', [TweetController, 'addTweet']).as('addTweet').use(middleware.auth())
-
-
-
-
-
-
-
 

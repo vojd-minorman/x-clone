@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('follow-unfollow-form');
   const button = document.getElementById('follow-unfollow-button');
   const formAction = document.getElementById('form-action');
-
+  
 
     async function followRel(event) {
       event.preventDefault();
@@ -76,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
             'Accept': 'application/json'
           }
         });
-
         const result = await response.json();
 
         if (result.success) {
@@ -149,7 +148,7 @@ async function addTweet(tweet) {
     const data = await response.json();
 
     if (response.ok) {
-      window.location.href = "/login"; // Redirection après l'envoi
+      location.reload(); // Redirection après l'envoi
     } else {
       console.log("Erreur lors de l'envoi du tweet:", data.error);
     }
@@ -187,7 +186,6 @@ tweetForm.addEventListener("submit", async function (event) {
 
   const formData = new FormData(event.target);
   const tweetImage = formData.get("tweet_image");
-
   let urlToImage = null;
   if (tweetImage && tweetImage.size > 0) {
     urlToImage = await uploadImage(tweetImage);
@@ -196,7 +194,7 @@ tweetForm.addEventListener("submit", async function (event) {
   if (urlToImage) {
     formData.set("tweet_image", urlToImage); // Remplace le champ image par l'URL retournée par Cloudinary
   } else {
-    formData.delete("tweet_image"); // Supprime le champ image si aucune image n'a été uploadée
+    formData.set("tweet_image", " "); // Renvoi une chaine vide
   }
 
   const data = Object.fromEntries(formData.entries());

@@ -3,6 +3,6 @@ import vine from '@vinejs/vine'
 export const createAddTweetValidator = vine.compile(
   vine.object({
     text: vine.string().trim().minLength(3),
-    text_image: vine.string().trim(),
+    tweet_image: vine.string().trim(),
   })
 )

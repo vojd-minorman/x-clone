@@ -19,11 +19,13 @@
             <p>
               {{tweet.text}}
             </p>
-            {{--  <div class="tweet-image">
-                @if(image)
-                    <img src="{{image}}" alt="tweet image"/>
-                @endif
-            </div>  --}}
+            <div class="tweet-image">
+
+              @if (tweet.tweetImage)
+              <img src="{{ tweet.tweetImage }}" alt="Tweet Image">
+            @endif
+
+            </div>
          </div>
          <div class="tweet-actions">
            <p class="tweet-action">

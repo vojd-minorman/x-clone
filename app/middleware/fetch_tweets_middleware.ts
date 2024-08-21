@@ -10,7 +10,7 @@ export default class FetchTweetsMiddleware {
     const user = await auth.use('web').authenticate()
     try {
 // Récupère les tweets avec les informations utilisateur associées
-const tweets = await Tweet.query().preload('users')
+const tweets = await Tweet.query().orderBy('created_at', 'desc').preload('users')
 
   // Récupère les IDs des utilisateurs suivis par l'utilisateur actuel
   const followingIdsResult = await Follow.query().where('follower_id', user.id).select('following_id')
@@ -37,21 +37,20 @@ const enrichedTweets = tweets.map(tweet => {
         }
       })
 
-
       view.share({
         enrichedTweets,
         enrichedFollowingTweets,
       })
-  // console.log(enrichedTweets);
+  console.log(enrichedTweets);
 
   // view.share({enrichedTweets})
-
+      // await next()
   const output = await next()
   return output
 
     } catch (error) {
       console.error('Error fetching tweets:', error)
-
+      // await next()
       const output = await next()
       return output
     }
