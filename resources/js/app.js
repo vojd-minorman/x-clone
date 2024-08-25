@@ -210,14 +210,15 @@ tweetForm.addEventListener("submit", async function (event) {
 /*********************************************************** */
 
 
-  const scrollerList = document.querySelector('.scroller .scroller_list')
-  const scrollerBuffer = document.querySelector('.scroller .scroller_buffer')
+  const scrollerList = document.querySelector('#content-all .scroller_list')
+  const scrollerBuffer = document.querySelector('#content-all .scroller_buffer')
   const states = {
     IDLE: 0,
     WORKING: 1,
     DONE: 2
   }
   let state = states.IDLE
+    let currentPage = 1
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -239,3 +240,49 @@ tweetForm.addEventListener("submit", async function (event) {
       state = states.DONE
     }
   }
+
+  /********Pour les tweets des followings**** */
+
+  document.addEventListener('DOMContentLoaded', () => {
+  // Sélecteurs pour le deuxième onglet
+  const scrollerListFollowing = document.querySelector('#content-following .scroller_list');
+  const scrollerBufferFollowing = document.querySelector('#content-following .scroller_buffer');
+
+  // États du scroller
+  const states = {
+    IDLE: 0,
+    WORKING: 1,
+    DONE: 2
+  };
+
+  let stateFollowing = states.IDLE;
+  let currentPageFollowing = 1; // Assure-toi de commencer à la page 1 ou ajuste selon tes besoins
+
+  // Observer pour détecter le défilement
+  const observerFollowing = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        fetchNextPageFollowing();
+      }
+    });
+  });
+
+  // Observer pour la div de buffer
+  observerFollowing.observe(scrollerBufferFollowing);
+
+  async function fetchNextPageFollowing() {
+    if (stateFollowing === states.WORKING) return;
+    stateFollowing = states.WORKING;
+
+    const nextPage = ++currentPageFollowing;
+    const { html_2, following } = await fetch(`/api/tweet/paginate/${nextPage}?type=following`).then(r => r.json());
+
+    scrollerListFollowing.innerHTML += html_2;
+    stateFollowing = states.IDLE;
+
+    if (nextPage >= following.meta.lastPage) {
+      observerFollowing.unobserve(scrollerBufferFollowing);
+      stateFollowing = states.DONE;
+    }
+  }
+});

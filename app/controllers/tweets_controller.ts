@@ -74,13 +74,13 @@ export default class TweetsController {
     })
 
       // Récupère les tweets des utilisateurs suivis
-      const followingTweets = await Tweet.query()
+      const following = await Tweet.query()
       .whereIn('user_id', followingIds)
       .orderBy('created_at', 'desc')
       .preload('users')
       .paginate(1, this.perPage)
 
-      const enrichedFollowingTweets = followingTweets.map(tweet => {
+      const enrichedFollowingTweets = following.map(tweet => {
         //Formatage de la Date avec date-fns
         const formattedDate = formatDistanceToNow(tweet.createdAt.toJSDate(), { addSuffix: true, locale: fr })
           return {
@@ -92,7 +92,7 @@ export default class TweetsController {
         })
 
 
-    return view.render('pages/index', { enrichedTweets, page, followingTweets, enrichedFollowingTweets})
+    return view.render('pages/index', { enrichedTweets, page, following, enrichedFollowingTweets})
   }
 
     /**
@@ -112,7 +112,6 @@ export default class TweetsController {
     .preload('users')
     .paginate(params.page, this.perPage)
 
-      console.log(params.page)
   // Récupère les IDs des utilisateurs suivis par l'utilisateur actuel
     const followingIdsResult = await Follow.query().where('follower_id', user.id).select('following_id')
 
@@ -149,7 +148,7 @@ export default class TweetsController {
       })
 
   const html_1 = await view.render('components/post_list', { posts : enrichedTweets })
-  const html_2 = await view.render('components/post_follow_list', { posts : enrichedTweets })
+  const html_2 = await view.render('components/post_follow_list', { postsFollowing : enrichedFollowingTweets })
       // console.log(html)
   return response.json({ html_1, html_2, enrichedTweets, enrichedFollowingTweets })
     }
