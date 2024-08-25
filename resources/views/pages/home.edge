@@ -1,13 +1,15 @@
 @layouts.app('title', 'Home')
+@component('components/asideNav')
+@endcomponent
  <div class="timeline">
+
   <a href={{ route('me.profil', { id: auth.user ? auth.user.fullName : '' }) }}>Mon Profil</a>
    @component('components/header')
    @endcomponent
    @component('components/tweetEditor')
    @endcomponent
-{{--
-   @component('components/information')
-   @endcomponent  --}}
+
+
 
 
 <!-- Content for all tweets -->

@@ -1,9 +1,14 @@
 {{-- resources/views/components/post_list.edge --}}
 @each(tweet in posts)
 
+{{--  <div class="p-4 sm:ml-64">
+  <div class="p-4  ">
+     <div class="flex items-center justify-center  mb-4 ">  --}}
+
+
 <article class="tweet">
   <div class="tweet-avatar">
-         {{--  <img src="{{image}}" alt="tweet avatar"/>  --}}
+         <img src="images/profile-photo.png" alt="tweet avatar"/>
   </div>
   <div class="tweet-content">
       <div class="tweet-body">
@@ -66,8 +71,8 @@
       </div>
   </div>
 </article>
-
-
-
+{{--  </div>
+</div>
+</div>  --}}
 @endeach
 

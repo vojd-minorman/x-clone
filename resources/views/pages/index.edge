@@ -1,5 +1,9 @@
 @layouts.app('title', 'Home')
+
+
+
  <div class="timeline">
+
   <a href={{ route('me.profil', { id: auth.user ? auth.user.fullName : '' }) }}>Mon Profil</a>
    @component('components/header')
    @endcomponent
@@ -24,9 +28,6 @@
 </div>
  </div>
 
- {{--  <script>
-  let currentPage = {{ page.currentPage }}
-</script>  --}}
 
  @end
 

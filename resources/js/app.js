@@ -1,5 +1,5 @@
 //Deconnexion
-
+import 'flowbite';
 // const { Console } = require("console");
 
 document.addEventListener('DOMContentLoaded', function () {

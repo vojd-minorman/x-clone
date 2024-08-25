@@ -21,7 +21,7 @@ const TweetsController = () => import('#controllers/tweets_controller')
 
 
 router.get('/', async (ctx: HttpContext) => {
-  return ctx.response.redirect().toRoute('home')
+  return ctx.response.redirect().toRoute('home.index')
 })
 
 // eslint-disable-next-line prettier/prettier

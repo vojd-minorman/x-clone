@@ -3,10 +3,13 @@ export default {
   content: [
     "./resources/**/*.edge",
     "./resources/**/*.{js,ts,jsx,tsx,vue}",
+    "./node_modules/flowbite/**/*.js",
   ],
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin')
+  ],
 }
 
