@@ -16,7 +16,7 @@ const AuthController = () => import('#controllers/auth_controller')
 const RegisterController = () => import('#controllers/registers_controller')
 const ShowProfilsController = () => import('#controllers/show_profils_controller')
 const FollowsController = () => import('#controllers/follows_controller')
-const TweetController = () => import('#controllers/tweets_controller')
+const TweetsController = () => import('#controllers/tweets_controller')
 
 
 
@@ -40,9 +40,7 @@ router.get('/register', [RegisterController, 'registerForm']).as('register')
 
 router.post('/register', [RegisterController, 'register'])
 
-router.get('/home', [AuthController, 'showhome']).use(middleware.fetchTweets()).use(middleware.auth()).as('home')
-
-
+router.get('/home', [TweetsController, 'showHome']).use(middleware.auth()).as('home.index')
 
 router.get('/profile/:user_id', [ShowProfilsController, 'show']).as('profile.show').use(middleware.auth())
 
@@ -54,5 +52,8 @@ router.post('/follow', [FollowsController, 'followOrUnfollow']).as('follow').use
 router.post('/unfollow', [FollowsController, 'followOrUnfollow']).as('unfollow').use(middleware.auth())
 
 
-router.post('/tweet', [TweetController, 'addTweet']).as('addTweet').use(middleware.auth())
+router.post('/tweet', [TweetsController, 'addTweet']).as('addTweet').use(middleware.auth())
 
+// router.get('/posts', [TweetsController, 'show']).use(middleware.auth()).as('posts.show')
+
+router.get('/api/tweet/paginate/:page', [TweetsController, 'paginate']).use(middleware.auth()).as('home.paginate')

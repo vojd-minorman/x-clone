@@ -42,6 +42,4 @@ export default class Tweet extends BaseModel {
     localKey: 'id', // Key on the users table that links to the tweets
   })
   declare users: BelongsTo<typeof User>
-
-  
 }

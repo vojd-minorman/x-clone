@@ -11,28 +11,62 @@
 
 
 <!-- Content for all tweets -->
-<div id="content-all" class="tab-content active">
-  @each(tweet in enrichedTweets)
-    @component('components/tweet', {tweet})
-    @endcomponent
-  @end
-
+<div id="scroller" class="tab-content active" style="position : relative;">
+  <div class="scroller_list">
+    {{--  @each(tweet in enrichedTweets)
+      @component('components/tweet', {tweet})
+      @endcomponent
+    @end  --}}
+    @!component('components/post_list', { posts : tweets.rows })
+  <div class="scroller_buffer" style="position: absolute; bottom: 0; left:0; width: 100%; height: 50vh; pointer-events: none;"></div>
+</div>
 </div>
 
 <!-- Content for following tweets -->
-<div id="content-following" class="tab-content">
-  @each(tweet in enrichedFollowingTweets)
-    @component('components/tweet', {tweet})
-    @endcomponent
-  @end
-</div>
-
-   {{--  @each(tweet in enrichedTweets)
+{{--  <div id="content-following" class="tab-content" >
+  <div class="tweet-container">  --}}
+    {{--  @each(tweet in enrichedFollowingTweets)
       @component('components/tweet', {tweet})
       @endcomponent
-   @end  --}}
+    @end  --}}
+    {{--  @!component('components/post_list', { posts: enrichedTweets.rows })  --}}
+  {{--  </div>
+  <div class="scroller_buffer"></div>
+</div>  --}}
 
-   @component('components/footer')
-   @endcomponent
+  @component('components/footer')
+  @endcomponent
  </div>
 @end
+
+<script>
+  const scrollerList = document.querySelector('#scroller .scroller_list')
+  const scrollerBuffer = document.querySelector('#scroller .scroller_buffer')
+  const states = {
+    IDLE: 0,
+    WORKING: 1,
+    DONE: 2
+  }
+  let state = states.IDLE
+  let currentPage = {{ tweets.currentPage }}
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        fetchNextPage()
+      }
+    })
+  })
+  observer.observe(scrollerBuffer)
+  async function fetchNextPage() {
+    if (state === states.WORKING) return
+    state = states.WORKING
+    const nextPage = ++currentPage;
+    const { html, enrichedTweets } = await fetch(`/api/tweet/paginate/${nextPage}`).then(r => r.json())
+    scrollerList.innerHTML += html
+    state = states.IDLE
+    if (nextPage >= enrichedTweets.meta.last_page) {
+      observer.unobserve(scrollerBuffer)
+      state = states.DONE
+    }
+  }
+</script>

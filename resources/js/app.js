@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('follow-unfollow-form');
   const button = document.getElementById('follow-unfollow-button');
   const formAction = document.getElementById('form-action');
-  
+
 
     async function followRel(event) {
       event.preventDefault();
@@ -205,3 +205,37 @@ tweetForm.addEventListener("submit", async function (event) {
   event.target.reset();
 });
 
+/************************************************************* */
+/**********************Gestion d'affichage******************* */
+/*********************************************************** */
+
+
+  const scrollerList = document.querySelector('.scroller .scroller_list')
+  const scrollerBuffer = document.querySelector('.scroller .scroller_buffer')
+  const states = {
+    IDLE: 0,
+    WORKING: 1,
+    DONE: 2
+  }
+  let state = states.IDLE
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        fetchNextPage()
+      }
+    })
+  })
+  observer.observe(scrollerBuffer)
+  async function fetchNextPage() {
+    if (state === states.WORKING) return
+    state = states.WORKING
+    const nextPage = ++currentPage;
+    const { html_1, page } = await fetch(`/api/tweet/paginate/${nextPage}`).then(r => r.json())
+    scrollerList.innerHTML += html_1
+    state = states.IDLE
+    if (nextPage >= page.meta.lastPage) {
+      observer.unobserve(scrollerBuffer)
+      state = states.DONE
+    }
+  }
